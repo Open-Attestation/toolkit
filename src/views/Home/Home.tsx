@@ -1,26 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Counter } from "../../components/Counter";
-import logo from "./logo.svg";
-import "./Home.css";
+import { getData } from "@govtechsg/open-attestation";
+import React, { useState } from "react";
 
-export const Home: React.FunctionComponent = () => (
-  <div>
-    <header className="flex flex-col items-center justify-center text-lg text-white min-h-screen bg-purple-700">
-      <img src={logo} className="h-40 spin" alt="logo" />
-      <Counter />
-      <a
-        data-testid="learn-react-link"
-        className="text-teal-400"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
+export const Home: React.FunctionComponent = () => {
+  const [rawDocument, setRawDocument] = useState("");
+  const [copied, setCopied] = useState(false);
+  return (
+    <>
+      <div className="border-red-700 border">
+        <textarea className="w-full" onChange={(e) => setRawDocument(e.target.value)} rows={30} value={rawDocument} />
+      </div>
+      <button
+        onClick={() => {
+          if (rawDocument) {
+            navigator.clipboard.writeText(JSON.stringify(getData(JSON.parse(rawDocument)))).then(() => {
+              setCopied(true);
+            });
+          }
+        }}
       >
-        Learn React
-      </a>
-      <Link data-testid="help-link" to="/help">
-        Help
-      </Link>
-    </header>
-  </div>
-);
+        Unwrap
+      </button>
+      {copied && "Copied to clipboard!"}
+    </>
+  );
+};
