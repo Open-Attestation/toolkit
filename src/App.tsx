@@ -27,7 +27,7 @@ export const App: React.FunctionComponent = () => (
                 </div>
               </div>
             </div>
-            <img className="w-full sm:w-1/3" src={homeLogo} />
+            <img className="w-full sm:w-1/3" src={homeLogo} alt="decorative header" />
           </div>
         </div>
       </section>
