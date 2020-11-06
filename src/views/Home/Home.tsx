@@ -1,26 +1,21 @@
-import { getData } from "@govtechsg/open-attestation";
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
-export const Home: React.FunctionComponent = () => {
-  const [rawDocument, setRawDocument] = useState("");
-  const [copied, setCopied] = useState(false);
-  return (
-    <>
-      <div className="border-red-700 border">
-        <textarea className="w-full" onChange={(e) => setRawDocument(e.target.value)} rows={30} value={rawDocument} />
-      </div>
-      <button
-        onClick={() => {
-          if (rawDocument) {
-            navigator.clipboard.writeText(JSON.stringify(getData(JSON.parse(rawDocument)))).then(() => {
-              setCopied(true);
-            });
-          }
-        }}
-      >
-        Unwrap
-      </button>
-      {copied && "Copied to clipboard!"}
-    </>
-  );
-};
+interface ToolProps {
+  title: string;
+  to: string;
+}
+const Tool: React.FunctionComponent<ToolProps> = ({ title, to }) => (
+  <Link
+    className="border border-t-8 border-indigo-500 text-center text-xl py-6 px-2 bg-gradient-to-r from-indigo-100 to-indigo-200 hover:from-indigo-200 hover:to-indigo-300"
+    to={to}
+  >
+    {title}
+  </Link>
+);
+
+export const Home: React.FunctionComponent = () => (
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 container mx-auto">
+    <Tool title="Unwrap" to="/unwrap" />
+  </div>
+);
