@@ -16,6 +16,6 @@ const Tool: React.FunctionComponent<ToolProps> = ({ title, to }) => (
 
 export const Home: React.FunctionComponent = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 container mx-auto">
-    <Tool title="Unwrap" to="/unwrap" />
+    <Tool title="Wrap" to="/wrap" />
   </div>
 );

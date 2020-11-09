@@ -1,4 +1,4 @@
-import { getData } from "@govtechsg/open-attestation";
+import { getData, wrapDocument } from "@govtechsg/open-attestation";
 import React, { useEffect, useState } from "react";
 
 const FailedAlert: React.FunctionComponent = ({ children }) => (
@@ -14,7 +14,7 @@ const SucceedAlert: React.FunctionComponent = ({ children }) => (
 );
 
 type Status = "INITIAL" | "SUCCEED" | "FAILED";
-export const Unwrap: React.FunctionComponent = () => {
+export const Wrap: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState("");
   const [copied, setCopied] = useState<Status>("INITIAL");
   useEffect(() => {
@@ -30,6 +30,27 @@ export const Unwrap: React.FunctionComponent = () => {
         rows={10}
         value={rawDocument}
       />
+      <button
+        className="hover:bg-transparent bg-teal-500 hover:text-teal-700 font-semibold text-white py-2 px-4 border hover:border-teal-500 border-transparent rounded mb-2"
+        onClick={() => {
+          try {
+            if (rawDocument) {
+              navigator.clipboard
+                .writeText(JSON.stringify(wrapDocument(JSON.parse(rawDocument))))
+                .then(() => {
+                  setCopied("SUCCEED");
+                })
+                .catch(() => {
+                  setCopied("FAILED");
+                });
+            }
+          } catch {
+            setCopied("FAILED");
+          }
+        }}
+      >
+        Wrap
+      </button>
       <button
         className="hover:bg-transparent bg-teal-500 hover:text-teal-700 font-semibold text-white py-2 px-4 border hover:border-teal-500 border-transparent rounded mb-2"
         onClick={() => {
