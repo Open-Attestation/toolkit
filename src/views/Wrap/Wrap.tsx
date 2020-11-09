@@ -22,16 +22,16 @@ export const Wrap: React.FunctionComponent = () => {
   }, [rawDocument]);
   return (
     <div className="container mx-auto py-6 text-center">
-      <h1 className="text-3xl mb-4">Unwrap an OpenAttestation document</h1>
+      <h1 className="text-3xl mb-4">(Un)Wrap an OpenAttestation document</h1>
       <textarea
         className="w-full px-3 py-2 text-gray-800 border-2 rounded-lg focus:shadow-outline"
         onChange={(e) => setRawDocument(e.target.value)}
-        placeholder="Paste a wrapped document and click on Unwrap to get the initial document copied into your clipboard"
+        placeholder="Paste a document and click on wrap/unwrap buttons to get the generated content copied into your clipboard"
         rows={10}
         value={rawDocument}
       />
       <button
-        className="hover:bg-transparent bg-teal-500 hover:text-teal-700 font-semibold text-white py-2 px-4 border hover:border-teal-500 border-transparent rounded mb-2"
+        className="hover:bg-transparent bg-teal-500 hover:text-teal-700 font-semibold text-white py-2 px-4 border hover:border-teal-500 border-transparent rounded mb-2 mr-1"
         onClick={() => {
           try {
             if (rawDocument) {
@@ -52,7 +52,7 @@ export const Wrap: React.FunctionComponent = () => {
         Wrap
       </button>
       <button
-        className="hover:bg-transparent bg-teal-500 hover:text-teal-700 font-semibold text-white py-2 px-4 border hover:border-teal-500 border-transparent rounded mb-2"
+        className="hover:bg-transparent bg-teal-500 hover:text-teal-700 font-semibold text-white py-2 px-4 border hover:border-teal-500 border-transparent rounded mb-2 ml-1"
         onClick={() => {
           try {
             if (rawDocument) {
