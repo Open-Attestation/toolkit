@@ -2,7 +2,11 @@ module.exports = {
   theme: {
     extend: {},
   },
-  variants: {},
+  variants: {
+    extend: {
+      backgroundColor: ["hover"],
+    },
+  },
   plugins: [
     function ({ addComponents }) {
       addComponents({

@@ -31,7 +31,7 @@ export const Wrap: React.FunctionComponent = () => {
         value={rawDocument}
       />
       <button
-        className="hover:bg-transparent bg-teal-500 hover:text-teal-700 font-semibold text-white py-2 px-4 border hover:border-teal-500 border-transparent rounded mb-2 mr-1"
+        className="btn-primary"
         onClick={() => {
           try {
             if (rawDocument) {
@@ -52,7 +52,7 @@ export const Wrap: React.FunctionComponent = () => {
         Wrap
       </button>
       <button
-        className="hover:bg-transparent bg-teal-500 hover:text-teal-700 font-semibold text-white py-2 px-4 border hover:border-teal-500 border-transparent rounded mb-2 ml-1"
+        className="btn-primary"
         onClick={() => {
           try {
             if (rawDocument) {
