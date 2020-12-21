@@ -21,7 +21,7 @@ export const Wrap: React.FunctionComponent = () => {
     setCopied("INITIAL");
   }, [rawDocument]);
   return (
-    <div className="container mx-auto py-6 text-center">
+    <div className="container mx-auto py-6">
       <h1 className="text-3xl mb-4">(Un)Wrap an OpenAttestation document</h1>
       <textarea
         className="w-full px-3 py-2 text-gray-800 border-2 rounded-lg focus:shadow-outline"

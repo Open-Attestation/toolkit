@@ -27,7 +27,7 @@ export const Verify: React.FunctionComponent = () => {
   const selected = "hover:bg-blue-400 bg-blue-500 text-white border-blue-500 hover:border-blue-400";
   const notSelected = "bg-white text-blue-500 border-blue-500";
   return (
-    <div className="container mx-auto py-6 text-center">
+    <div className="container mx-auto py-6">
       <h1 className="text-3xl mb-4">Verify an OpenAttestation document</h1>
       <button
         className={`font-semibold py-2 px-4 border rounded mb-2 mr-1 ${network === "ropsten" ? selected : notSelected}`}
