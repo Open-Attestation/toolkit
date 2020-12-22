@@ -28,7 +28,7 @@ export const Breadcrumb: React.FunctionComponent = () => {
   });
 
   return (
-    <nav className="container mx-auto m-6">
+    <nav className="container mx-auto my-4">
       <div className="list-reset flex">
         <Link className="font-bold hover:underline" to="/">
           Tools

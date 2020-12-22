@@ -11,7 +11,7 @@ export const Router = (): ReactElement => {
   return (
     <BrowserRouter>
       <nav className="py-3 text-white bg-indigo-800">
-        <div className="container mx-auto px-6 md:px-2">
+        <div className="container mx-auto">
           <div className="flex flex-row flex-grow flex-shrink justify-between">
             <div className="flex items-center">
               <img className="w-8 mr-4" src={oaLogo} alt="OpenAttestation Logo" />
@@ -24,7 +24,7 @@ export const Router = (): ReactElement => {
       </nav>
       <main className="flex-1 flex flex-col">
         <section>
-          <div className="container mx-auto px-6 md:px-2 py-8">
+          <div className="container mx-auto py-4">
             <div className="flex flex-wrap items-center">
               <div className="w-full sm:w-2/3">
                 <div className="py-12 text-center sm:text-left">
@@ -38,7 +38,7 @@ export const Router = (): ReactElement => {
             </div>
           </div>
         </section>
-        <section className="bg-gray-300 flex-1 py-6">
+        <section className="bg-gray-300 flex-1 py-4">
           <Breadcrumb />
           <Switch>
             <Route exact path="/wrap">
@@ -53,6 +53,11 @@ export const Router = (): ReactElement => {
           </Switch>
         </section>
       </main>
+      <footer className="py-6 text-white bg-indigo-800">
+        <div className="container mx-auto">
+          <p>Copyright © 2020 Government Technology Agency (Singapore)</p>
+        </div>
+      </footer>
     </BrowserRouter>
   );
 };
