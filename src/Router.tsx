@@ -44,7 +44,7 @@ export const Router = (): ReactElement => {
             </div>
           </div>
         </section>
-        <section className="bg-gray-300 flex-1 py-4">
+        <section className="bg-gray-200 flex-1 py-4">
           <Breadcrumb />
           <Switch>
             <Route exact path="/wrap">
