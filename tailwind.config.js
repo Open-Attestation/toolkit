@@ -4,7 +4,13 @@ module.exports = {
       center: true,
       padding: theme("spacing.4"),
     }),
-    extend: {},
+    extend: {
+      colors: {
+        navy: {
+          default: "#324353",
+        },
+      },
+    },
   },
   variants: {
     extend: {

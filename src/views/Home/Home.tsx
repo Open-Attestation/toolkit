@@ -7,7 +7,7 @@ interface ToolProps {
 }
 const Tool: React.FunctionComponent<ToolProps> = ({ title, to }) => (
   <Link
-    className="border border-t-8 border-indigo-500 text-center text-xl py-6 px-2 bg-gradient-to-r from-indigo-100 to-indigo-200 hover:from-indigo-200 hover:to-indigo-300 uppercase"
+    className="transition duration-200 ease-out border border-t-8 border-indigo-500 text-center text-xl py-6 px-2 uppercase bg-indigo-200 hover:bg-indigo-100"
     to={to}
   >
     {title}
