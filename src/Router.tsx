@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { Breadcrumb } from "./components/Breadcrumb/Breadcrumb";
 import oaLogo from "./images/oa.svg";
+import { Dns } from "./views/Dns/Dns";
 import { Home } from "./views/Home";
 import { Verify } from "./views/Verify/Verify";
 import { Wrap } from "./views/Wrap/Wrap";
@@ -52,6 +53,9 @@ export const Router = (): ReactElement => {
             </Route>
             <Route exact path="/verify">
               <Verify />
+            </Route>
+            <Route exact path="/dns">
+              <Dns />
             </Route>
             <Route path="/">
               <Home />
