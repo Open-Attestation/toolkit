@@ -1,17 +1,6 @@
 import { verificationBuilder, VerificationFragment, openAttestationVerifiers, isValid } from "@govtechsg/oa-verify";
 import React, { useEffect, useState } from "react";
-
-const FailedAlert: React.FunctionComponent = ({ children }) => (
-  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-    <strong className="font-bold">{children}</strong>
-  </div>
-);
-
-const SucceedAlert: React.FunctionComponent = ({ children }) => (
-  <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-    <strong className="font-bold">{children}</strong>
-  </div>
-);
+import { FailedAlert, SucceedAlert } from "./../../components/Alert/Alert";
 
 type Status = "INITIAL" | "PENDING" | "SUCCEED" | "FAILED";
 type Network = "ropsten" | "homestead" | "rinkeby";
