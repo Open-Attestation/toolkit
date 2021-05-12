@@ -19,5 +19,6 @@ export const Home: React.FunctionComponent = () => (
     <Tool title="(un)Wrap" to="/wrap" />
     <Tool title="Verify" to="/verify" />
     <Tool title="Dns" to="/dns" />
+    <Tool title="Diagnose" to="/diagnose" />
   </div>
 );

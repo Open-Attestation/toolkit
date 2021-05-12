@@ -1,7 +1,8 @@
 import React, { ReactElement } from "react";
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import { Breadcrumb } from "./components/Breadcrumb/Breadcrumb";
 import oaLogo from "./images/oa.svg";
+import { Diagnose } from "./views/Diagnose/Diagnose";
 import { Dns } from "./views/Dns/Dns";
 import { Home } from "./views/Home";
 import { Verify } from "./views/Verify/Verify";
@@ -56,6 +57,9 @@ export const Router = (): ReactElement => {
             </Route>
             <Route exact path="/dns">
               <Dns />
+            </Route>
+            <Route exact path="/diagnose">
+              <Diagnose />
             </Route>
             <Route path="/">
               <Home />
