@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 .btn-primary {
-  @apply bg-teal-500 font-semibold text-white py-2 px-4 border border-transparent rounded mb-2 mr-1;
+  @apply bg-green-500 font-semibold text-white py-2 px-4 border border-transparent rounded mb-2 mr-1;
 }
 .btn-primary:hover {
-  @apply text-teal-700 border-teal-500 bg-transparent;
+  @apply text-green-700 border-green-500 bg-transparent;
 }
