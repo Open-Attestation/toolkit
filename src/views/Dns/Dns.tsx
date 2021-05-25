@@ -14,7 +14,7 @@ enum Status {
 }
 
 export const Dns: React.FunctionComponent = () => {
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("demo-tradetrust.openattestation.com");
   const [status, setStatus] = useState<Status>(Status.INITIAL);
   const [recordsDid, setRecordsDid] = useState<OpenAttestationDnsDidRecord[]>([]);
   const [recordsText, setRecordsTxt] = useState<OpenAttestationDNSTextRecord[]>([]);
@@ -43,7 +43,7 @@ export const Dns: React.FunctionComponent = () => {
       <input
         className="w-full px-3 py-2 text-gray-800 border-2 rounded-lg focus:shadow-outline mb-2"
         onChange={(e) => setLocation(e.target.value)}
-        placeholder="example.tradetrust.io"
+        placeholder="Enter your domain"
         value={location}
       />
       <button
