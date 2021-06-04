@@ -58,6 +58,7 @@ export const EncryptDecrypt: React.FunctionComponent = () => {
                 }
                 const decryptedDoc = JSON.parse(decryptString(encryptedDoc));
                 setRawDocument(JSON.stringify(decryptedDoc, undefined, 2));
+                setKey(encryptedDoc.key);
                 setValid(true);
                 setNoticeMsg("");
               } catch (e) {
