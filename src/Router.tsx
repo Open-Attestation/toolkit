@@ -4,6 +4,7 @@ import { Breadcrumb } from "./components/Breadcrumb/Breadcrumb";
 import oaLogo from "./images/oa.svg";
 import { Diagnose } from "./views/Diagnose/Diagnose";
 import { Dns } from "./views/Dns/Dns";
+import { EncryptDecrypt } from "./views/EncryptDecrypt/EncryptDecrypt";
 import { Home } from "./views/Home";
 import { Verify } from "./views/Verify/Verify";
 import { Wrap } from "./views/Wrap/Wrap";
@@ -60,6 +61,9 @@ export const Router = (): ReactElement => {
             </Route>
             <Route exact path="/diagnose">
               <Diagnose />
+            </Route>
+            <Route exact path="/encrypt-decrypt">
+              <EncryptDecrypt />
             </Route>
             <Route path="/">
               <Home />
