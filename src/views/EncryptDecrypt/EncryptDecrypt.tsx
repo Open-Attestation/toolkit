@@ -8,6 +8,7 @@ const SAMPLE_DOC_URL =
 export const EncryptDecrypt: React.FunctionComponent = () => {
   const [key, setKey] = useState(generateEncryptionKey());
   const [rawDocument, setRawDocument] = useState("");
+  const [url, setUrl] = useState("");
   const [encryptedDocument, setEncryptedDocument] = useState("");
   const [isValid, setValid] = useState(true);
   const [noticeMsg, setNoticeMsg] = useState("");
@@ -61,7 +62,8 @@ export const EncryptDecrypt: React.FunctionComponent = () => {
                 if (missingKeys.length !== 0) {
                   throw new Error(`Missing ${missingKeys.toString()}`);
                 }
-                setRawDocument(decryptString(encryptedDoc));
+                const decryptedDoc = JSON.parse(decryptString(encryptedDoc));
+                setRawDocument(JSON.stringify(decryptedDoc, undefined, 2));
                 setValid(true);
                 setNoticeMsg("");
               } catch (e) {
@@ -72,8 +74,44 @@ export const EncryptDecrypt: React.FunctionComponent = () => {
           >{`< Decrypt`}</button>
         </div>
         <div className="flex-1">
+          <div className="flex items-center mb-2">
+            <label>URL:</label>
+            <input
+              className="w-full px-2 py-2 mx-2 bg-white font-mono text-xs border-2 rounded-lg focus:shadow-outline"
+              onChange={(e) => setUrl(e.target.value)}
+              value={url}
+            />
+            <button
+              className="px-2 py-2 bg-blue-500 text-xs text-white border border-transparent rounded"
+              onClick={async () => {
+                try {
+                  const params = new URLSearchParams(new URL(url).search);
+                  const q = params.get("q");
+                  if (!q) {
+                    throw new Error(`Missing "q" query param in URL`);
+                  }
+                  const { payload } = JSON.parse(q);
+                  const missingKeys = ["uri", "key"].filter((key) => !(key in payload));
+                  if (missingKeys.length !== 0) {
+                    throw new Error(`Missing ${missingKeys.toString()} in URL`);
+                  }
+                  const uriContent = await (await fetch(payload.uri)).json();
+                  setEncryptedDocument(JSON.stringify({ ...uriContent, key: payload.key }, undefined, 2));
+                  setValid(true);
+                  setNoticeMsg("");
+                  setRawDocument("");
+                } catch (e) {
+                  setValid(false);
+                  setNoticeMsg(`${e}`);
+                }
+              }}
+            >
+              Load
+            </button>
+          </div>
           <textarea
-            className="w-full h-full px-3 py-2 font-mono text-gray-800 border-2 rounded-lg focus:shadow-outline"
+            className="w-full px-3 py-2 font-mono text-gray-800 border-2 rounded-lg focus:shadow-outline"
+            rows={20}
             onChange={(e) => setEncryptedDocument(e.target.value)}
             placeholder={JSON.stringify({ cipherText: "", iv: "", tag: "", key: "", type: "" }, undefined, 2)}
             value={encryptedDocument}
