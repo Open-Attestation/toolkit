@@ -1,6 +1,7 @@
-import { generateEncryptionKey, encryptString, decryptString } from "@govtechsg/oa-encryption";
-import React, { useState } from "react";
-import { FailedAlert } from "./../../components/Alert/Alert";
+import { decryptString, encryptString, generateEncryptionKey } from "@govtechsg/oa-encryption";
+import React, { useEffect, useState } from "react";
+import { FailedAlert, SucceedAlert } from "../components/alert";
+import { Status } from "../shared";
 
 const SAMPLE_ENCRYPTED_DOC =
   "https://action.openattestation.com/?q=%7B%22type%22%3A%22DOCUMENT%22%2C%22payload%22%3A%7B%22uri%22%3A%22https%3A%2F%2Fapi-vaccine.storage.staging.notarise.io%2Fdocument%2F6cfbbcbf-85a1-4644-b61a-952c12376502%22%2C%22key%22%3A%222b1236683c3a842ed4a0bb032c1cf668e24bcaf8ce599aeef502c93cb628152c%22%2C%22permittedActions%22%3A%5B%22VIEW%22%2C%22STORE%22%5D%2C%22redirect%22%3A%22https%3A%2F%2Fwww.verify.gov.sg%2Fverify%22%7D%7D";
@@ -12,10 +13,27 @@ export const EncryptDecrypt: React.FunctionComponent = () => {
   const [encryptedDocument, setEncryptedDocument] = useState("");
   const [isValid, setValid] = useState(true);
   const [noticeMsg, setNoticeMsg] = useState("");
+  const [copied, setCopied] = useState<Status>("INITIAL");
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (copied !== "INITIAL") {
+      timeout = setTimeout(() => {
+        setCopied("INITIAL");
+      }, 5000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [copied]);
 
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-3xl mb-4">Encrypt/Decrypt an OpenAttestation document</h1>
+      <div className="mb-4 mt-4">
+        {copied === "SUCCEED" && <SucceedAlert>Key copied to clipboard!</SucceedAlert>}
+        {copied === "FAILED" && <FailedAlert>Unable to copy the key to clipboard!</FailedAlert>}
+      </div>
       <div className="flex mb-6">
         <div className="flex-1">
           <textarea
@@ -32,11 +50,23 @@ export const EncryptDecrypt: React.FunctionComponent = () => {
               value={key}
               disabled
             />
-            <button
-              className="px-2 py-2 bg-blue-500 text-xs text-white border border-transparent rounded"
-              onClick={() => setKey(generateEncryptionKey())}
-            >
+            <button className="btn-blue-small" onClick={() => setKey(generateEncryptionKey())}>
               Regenerate
+            </button>
+            <button
+              className="ml-2 btn-blue-small"
+              onClick={() => {
+                navigator.clipboard
+                  .writeText(key)
+                  .then(() => {
+                    setCopied("SUCCEED");
+                  })
+                  .catch(() => {
+                    setCopied("FAILED");
+                  });
+              }}
+            >
+              Copy
             </button>
           </div>
         </div>
@@ -44,7 +74,9 @@ export const EncryptDecrypt: React.FunctionComponent = () => {
           <button
             className="btn-primary"
             onClick={() => {
-              setEncryptedDocument(JSON.stringify(encryptString(rawDocument, key), undefined, 2));
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { key: _key, ...encryptedDocument } = encryptString(rawDocument, key);
+              setEncryptedDocument(JSON.stringify(encryptedDocument, undefined, 2));
             }}
           >{`Encrypt >`}</button>
           <button
@@ -77,7 +109,7 @@ export const EncryptDecrypt: React.FunctionComponent = () => {
               value={url}
             />
             <button
-              className="px-2 py-2 bg-blue-500 text-xs text-white border border-transparent rounded"
+              className="btn-blue-small"
               onClick={async () => {
                 try {
                   const params = new URLSearchParams(new URL(url).search);
@@ -108,7 +140,7 @@ export const EncryptDecrypt: React.FunctionComponent = () => {
             className="w-full px-3 py-2 font-mono text-gray-800 border-2 rounded-lg focus:shadow-outline"
             rows={20}
             onChange={(e) => setEncryptedDocument(e.target.value)}
-            placeholder={JSON.stringify({ cipherText: "", iv: "", tag: "", key: "", type: "" }, undefined, 2)}
+            placeholder={JSON.stringify({ cipherText: "", iv: "", tag: "", type: "" }, undefined, 2)}
             value={encryptedDocument}
           />
         </div>

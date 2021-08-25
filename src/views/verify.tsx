@@ -1,8 +1,8 @@
-import { verificationBuilder, VerificationFragment, openAttestationVerifiers, isValid } from "@govtechsg/oa-verify";
+import { isValid, openAttestationVerifiers, verificationBuilder, VerificationFragment } from "@govtechsg/oa-verify";
 import React, { useEffect, useState } from "react";
-import { FailedAlert, SucceedAlert } from "./../../components/Alert/Alert";
+import { FailedAlert, SucceedAlert } from "../components/alert";
+import { Status } from "../shared";
 
-type Status = "INITIAL" | "PENDING" | "SUCCEED" | "FAILED";
 type Network = "ropsten" | "homestead" | "rinkeby";
 export const Verify: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState("");
@@ -13,13 +13,13 @@ export const Verify: React.FunctionComponent = () => {
 
   const [fragments, setFragments] = useState<VerificationFragment[]>([]);
   const [network, setNetwork] = useState<Network>("ropsten");
-  const selected = "hover:bg-blue-400 bg-blue-500 text-white border-blue-500 hover:border-blue-400";
+  const selected = "hover:bg-blue-400 hover:text-white border-blue-500 hover:border-blue-400";
   const notSelected = "bg-white text-blue-500 border-blue-500";
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-3xl mb-4">Verify an OpenAttestation document</h1>
       <button
-        className={`font-semibold py-2 px-4 border rounded mb-2 mr-1 ${network === "ropsten" ? selected : notSelected}`}
+        className={`btn-blue-small font-bold mb-2 mr-1 ${network === "ropsten" ? selected : notSelected}`}
         onClick={async () => {
           setNetwork("ropsten");
         }}
@@ -27,9 +27,7 @@ export const Verify: React.FunctionComponent = () => {
         Ropsten
       </button>
       <button
-        className={`font-semibold py-2 px-4 border rounded mb-2 mr-1 ${
-          network === "homestead" ? selected : notSelected
-        }`}
+        className={`btn-blue-small font-bold mb-2 mr-1 ${network === "homestead" ? selected : notSelected}`}
         onClick={async () => {
           setNetwork("homestead");
         }}
@@ -37,7 +35,7 @@ export const Verify: React.FunctionComponent = () => {
         Mainnet
       </button>
       <button
-        className={`font-semibold py-2 px-4 border rounded mb-2 mr-1 ${network === "rinkeby" ? selected : notSelected}`}
+        className={`btn-blue-small font-bold mb-2 mr-1 ${network === "rinkeby" ? selected : notSelected}`}
         onClick={async () => {
           setNetwork("rinkeby");
         }}
