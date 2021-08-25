@@ -1,13 +1,13 @@
 import React, { ReactElement } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
-import { Breadcrumb } from "./components/Breadcrumb/Breadcrumb";
+import { Breadcrumb } from "./components/breadcrumb";
 import oaLogo from "./images/oa.svg";
-import { Diagnose } from "./views/Diagnose/Diagnose";
-import { Dns } from "./views/Dns/Dns";
-import { EncryptDecrypt } from "./views/EncryptDecrypt/EncryptDecrypt";
-import { Home } from "./views/Home";
-import { Verify } from "./views/Verify/Verify";
-import { Wrap } from "./views/Wrap/Wrap";
+import { Diagnose } from "./views/diagnose";
+import { Dns } from "./views/dns";
+import { EncryptDecrypt } from "./views/encrypt-decrypt";
+import { Home } from "./views/home";
+import { Verify } from "./views/verify";
+import { Wrap } from "./views/wrap";
 
 export const Router = (): ReactElement => {
   return (

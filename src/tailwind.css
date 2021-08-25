@@ -4,9 +4,18 @@
 
 @tailwind utilities;
 
-.btn-primary {
-  @apply bg-green-500 font-semibold text-white py-2 px-4 border border-transparent rounded mb-2 mr-1;
-}
-.btn-primary:hover {
-  @apply text-green-700 border-green-500 bg-transparent;
+@layer components {
+  .btn-primary {
+    @apply bg-green-500 font-semibold text-white py-2 px-4 border border-transparent rounded mb-2 mr-1;
+  }
+  .btn-primary:hover {
+    @apply text-green-700 border-green-500 bg-transparent;
+  }
+
+  .btn-blue-small {
+    @apply px-2 py-2 bg-blue-500 text-xs text-white border border-transparent rounded;
+  }
+  .btn-blue-small:hover {
+    @apply text-blue-700 border-blue-500 bg-transparent;
+  }
 }

@@ -5,7 +5,7 @@ import {
   OpenAttestationDnsDidRecord,
 } from "@govtechsg/dnsprove";
 import React, { useEffect, useState } from "react";
-import { FailedAlert, SucceedAlert } from "./../../components/Alert/Alert";
+import { FailedAlert, SucceedAlert } from "../components/alert";
 
 enum Status {
   INITIAL = "INITIAL",
