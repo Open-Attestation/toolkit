@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import { Breadcrumb } from "./components/breadcrumb";
 import oaLogo from "./images/oa.svg";
+import { ActionCreator } from "./views/action-creator";
 import { Diagnose } from "./views/diagnose";
 import { Dns } from "./views/dns";
 import { EncryptDecrypt } from "./views/encrypt-decrypt";
@@ -64,6 +65,9 @@ export const Router = (): ReactElement => {
             </Route>
             <Route exact path="/encrypt-decrypt">
               <EncryptDecrypt />
+            </Route>
+            <Route exact path="/action-creator">
+              <ActionCreator />
             </Route>
             <Route path="/">
               <Home />

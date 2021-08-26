@@ -21,5 +21,6 @@ export const Home: React.FunctionComponent = () => (
     <Tool title="Dns" to="/dns" />
     <Tool title="Diagnose" to="/diagnose" />
     <Tool title="Encrypt/Decrypt" to="/encrypt-decrypt" />
+    <Tool title="Action Creator" to="/action-creator" />
   </div>
 );
