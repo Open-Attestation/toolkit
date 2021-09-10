@@ -22,7 +22,9 @@
     @apply text-blue-500 bg-white hover:bg-gray-100 hover:text-blue-500;
   }
 
+  /* purgecss start ignore */
   [class*="btn"]:disabled {
     @apply cursor-not-allowed	bg-gray-300 text-gray-200 border-transparent;
   }
+  /* purgecss end ignore */
 }
