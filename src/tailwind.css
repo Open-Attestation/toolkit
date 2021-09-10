@@ -13,9 +13,16 @@
   }
 
   .btn-blue-small {
-    @apply px-2 py-2 bg-blue-500 text-xs text-white border border-transparent rounded;
+    @apply text-white bg-blue-500 text-xs px-2 py-2 border border-blue-500 rounded;
   }
-  .btn-blue-small:hover {
-    @apply text-blue-700 border-blue-500 bg-transparent;
+  .btn-blue-small.selected {
+    @apply text-white bg-blue-500 hover:bg-blue-400 hover:text-white hover:border-blue-400;
+  }
+  .btn-blue-small.unselected {
+    @apply text-blue-500 bg-white hover:bg-gray-100 hover:text-blue-500;
+  }
+
+  [class*="btn"]:disabled {
+    @apply cursor-not-allowed	bg-gray-300 text-gray-200 border-transparent;
   }
 }
