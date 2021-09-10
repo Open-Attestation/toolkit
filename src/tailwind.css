@@ -24,7 +24,7 @@
 
   /* purgecss start ignore */
   [class*="btn"]:disabled {
-    @apply cursor-not-allowed	bg-gray-300 text-gray-200 border-transparent;
+    @apply cursor-not-allowed bg-gray-300 text-gray-200 border-transparent;
   }
   /* purgecss end ignore */
 }
