@@ -31,14 +31,12 @@ export const Diagnose: React.FunctionComponent = () => {
     }
   }, [kind, rawDocument, version]);
 
-  const selected = "hover:bg-blue-400 hover:text-white border-blue-500 hover:border-blue-400";
-  const notSelected = "bg-white text-blue-500 border-blue-500";
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-3xl mb-4">Diagnose an OpenAttestation document</h1>
       <div>
         <button
-          className={`btn-blue-small font-bold mb-2 mr-1 ${version === "2.0" ? selected : notSelected}`}
+          className={`btn-blue-small font-bold mb-2 mr-1 ${version === "2.0" ? "selected" : "unselected"}`}
           onClick={async () => {
             setVersion("2.0");
           }}
@@ -46,7 +44,7 @@ export const Diagnose: React.FunctionComponent = () => {
           v2.0
         </button>
         <button
-          className={`btn-blue-small font-bold mb-2 mr-1 ${version === "3.0" ? selected : notSelected}`}
+          className={`btn-blue-small font-bold mb-2 mr-1 ${version === "3.0" ? "selected" : "unselected"}`}
           onClick={async () => {
             setVersion("3.0");
           }}
@@ -56,7 +54,7 @@ export const Diagnose: React.FunctionComponent = () => {
       </div>
       <div>
         <button
-          className={`btn-blue-small font-bold mb-2 mr-1 ${kind === "wrapped" ? selected : notSelected}`}
+          className={`btn-blue-small font-bold mb-2 mr-1 ${kind === "wrapped" ? "selected" : "unselected"}`}
           onClick={async () => {
             setKind("wrapped");
           }}
@@ -64,7 +62,7 @@ export const Diagnose: React.FunctionComponent = () => {
           Wrapped
         </button>
         <button
-          className={`btn-blue-small font-bold mb-2 mr-1 ${kind === "signed" ? selected : notSelected}`}
+          className={`btn-blue-small font-bold mb-2 mr-1 ${kind === "signed" ? "selected" : "unselected"}`}
           onClick={async () => {
             setKind("signed");
           }}
