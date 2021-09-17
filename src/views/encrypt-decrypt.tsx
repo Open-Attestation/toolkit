@@ -3,8 +3,23 @@ import React, { useEffect, useState } from "react";
 import { FailedAlert, SucceedAlert } from "../components/alert";
 import { Status } from "../shared";
 
-const SAMPLE_ENCRYPTED_DOC =
-  "https://action.openattestation.com/?q=%7B%22type%22%3A%22DOCUMENT%22%2C%22payload%22%3A%7B%22uri%22%3A%22https%3A%2F%2Fapi-vaccine.storage.staging.notarise.io%2Fdocument%2F6cfbbcbf-85a1-4644-b61a-952c12376502%22%2C%22key%22%3A%222b1236683c3a842ed4a0bb032c1cf668e24bcaf8ce599aeef502c93cb628152c%22%2C%22permittedActions%22%3A%5B%22VIEW%22%2C%22STORE%22%5D%2C%22redirect%22%3A%22https%3A%2F%2Fwww.verify.gov.sg%2Fverify%22%7D%7D";
+const stringifyAndEncode = (obj: Record<string, unknown>): string => window.encodeURIComponent(JSON.stringify(obj));
+
+const SAMPLE = {
+  q: {
+    type: "DOCUMENT",
+    payload: {
+      uri: "https://api-vaccine.storage.staging.notarise.io/document/6cfbbcbf-85a1-4644-b61a-952c12376502",
+      permittedActions: ["VIEW", "STORE"],
+      redirect: "https://www.verify.gov.sg/verify",
+    },
+  },
+  anchor: { key: "2b1236683c3a842ed4a0bb032c1cf668e24bcaf8ce599aeef502c93cb628152c" },
+};
+
+const action = stringifyAndEncode(SAMPLE.q);
+const anchor = stringifyAndEncode(SAMPLE.anchor);
+const SAMPLE_ENCRYPTED_DOC = `https://action.openattestation.com?q=${action}#${anchor}`;
 
 export const EncryptDecrypt: React.FunctionComponent = () => {
   const [key, setKey] = useState(generateEncryptionKey());
@@ -112,18 +127,23 @@ export const EncryptDecrypt: React.FunctionComponent = () => {
               className="btn-blue-small"
               onClick={async () => {
                 try {
-                  const params = new URLSearchParams(new URL(url).search);
-                  const q = params.get("q");
-                  if (!q) {
-                    throw new Error(`Missing "q" query param in URL`);
-                  }
-                  const { payload } = JSON.parse(q);
-                  const missingKeys = ["uri", "key"].filter((key) => !(key in payload));
-                  if (missingKeys.length !== 0) {
-                    throw new Error(`Missing ${missingKeys.toString()} in URL`);
-                  }
-                  const uriContent = await (await fetch(payload.uri)).json();
-                  setEncryptedDocument(JSON.stringify({ ...uriContent, key: payload.key }, undefined, 2));
+                  const _url = new URL(url);
+                  const params = new URLSearchParams(_url.search);
+                  const hash = _url.hash.substr(1);
+
+                  const action = JSON.parse(params.get("q") || "{}");
+                  const anchor = JSON.parse(window.decodeURIComponent(hash || "{}"));
+                  const key = anchor.key || action.payload?.key;
+
+                  const errors = [];
+                  if (!action.payload.uri) errors.push("payload.uri");
+                  if (!key) errors.push("key");
+                  if (errors.length > 0)
+                    throw new Error(`Please ensure the following params exists in the URL: ${errors}`);
+
+                  const uriContent = await (await fetch(action.payload.uri)).json();
+
+                  setEncryptedDocument(JSON.stringify({ ...uriContent, key }, undefined, 2));
                   setValid(true);
                   setNoticeMsg("");
                   setRawDocument("");
