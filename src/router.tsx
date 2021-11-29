@@ -1,14 +1,8 @@
 import React, { ReactElement } from "react";
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Link, Switch } from "react-router-dom";
 import { Breadcrumb } from "./components/breadcrumb";
 import oaLogo from "./images/oa.svg";
-import { ActionCreator } from "./views/action-creator";
-import { Diagnose } from "./views/diagnose";
-import { Dns } from "./views/dns";
-import { EncryptDecrypt } from "./views/encrypt-decrypt";
-import { Home } from "./views/home";
-import { Verify } from "./views/verify";
-import { Wrap } from "./views/wrap";
+import { Routes, routes } from "./routes";
 
 export const Router = (): ReactElement => {
   return (
@@ -51,27 +45,7 @@ export const Router = (): ReactElement => {
         <section className="bg-gray-200 flex-1 py-4">
           <Breadcrumb />
           <Switch>
-            <Route exact path="/wrap">
-              <Wrap />
-            </Route>
-            <Route exact path="/verify">
-              <Verify />
-            </Route>
-            <Route exact path="/dns">
-              <Dns />
-            </Route>
-            <Route exact path="/diagnose">
-              <Diagnose />
-            </Route>
-            <Route exact path="/encrypt-decrypt">
-              <EncryptDecrypt />
-            </Route>
-            <Route exact path="/action-creator">
-              <ActionCreator />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
+            <Routes routes={routes} />
           </Switch>
         </section>
       </main>
