@@ -44,9 +44,7 @@ export const Router = (): ReactElement => {
         </section>
         <section className="bg-gray-200 flex-1 py-4">
           <Breadcrumb />
-          <Switch>
-            <Routes routes={routes} />
-          </Switch>
+          <Routes routes={routes} />
         </section>
       </main>
       <footer className="py-6 text-white bg-navy">
