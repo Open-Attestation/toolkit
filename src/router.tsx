@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { BrowserRouter, Link, Switch } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 import { Breadcrumb } from "./components/breadcrumb";
 import oaLogo from "./images/oa.svg";
 import { Routes, routes } from "./routes";
