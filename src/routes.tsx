@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { ActionCreator } from "./views/action-creator";
 import { Diagnose } from "./views/diagnose";
 import { Dns } from "./views/dns";
@@ -30,10 +30,10 @@ export const routes = [
 
 export const Routes = ({ routes }: RoutesProps): React.ReactElement => {
   return (
-    <Switch>
+    <>
       {routes.map((route) => (
         <Route key={route.path} {...route} />
       ))}
-    </Switch>
+    </>
   );
 };
