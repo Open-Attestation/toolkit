@@ -8,7 +8,7 @@
     "@govtechsg/dnsprove": "^2.1.3",
     "@govtechsg/oa-encryption": "^1.3.3",
     "@govtechsg/oa-verify": "^7.10.0",
-    "@govtechsg/open-attestation": "^6.0.4",
+    "@govtechsg/open-attestation": "^6.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0"
