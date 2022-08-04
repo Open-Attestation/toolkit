@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FailedAlert, SucceedAlert } from "../components/alert";
 import { Status } from "../shared";
 
-type Network = "ropsten" | "homestead" | "rinkeby";
+type Network = "ropsten" | "homestead" | "rinkeby" | "goerli";
 export const Verify: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState("");
   const [status, setStatus] = useState<Status>("INITIAL");
@@ -39,6 +39,14 @@ export const Verify: React.FunctionComponent = () => {
         }}
       >
         Rinkeby
+      </button>
+      <button
+        className={`btn-blue-small font-bold mb-2 mr-1 ${network === "goerli" ? "selected" : "unselected"}`}
+        onClick={async () => {
+          setNetwork("goerli");
+        }}
+      >
+        Goerli
       </button>
       <textarea
         className="w-full px-3 py-2 text-gray-800 border-2 rounded-lg focus:shadow-outline"
