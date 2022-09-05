@@ -1,9 +1,19 @@
 import { isValid, openAttestationVerifiers, verificationBuilder, VerificationFragment } from "@govtechsg/oa-verify";
+import { providers } from "ethers";
 import React, { useEffect, useState } from "react";
 import { FailedAlert, SucceedAlert } from "../components/alert";
 import { Status } from "../shared";
 
-type Network = "ropsten" | "homestead" | "rinkeby" | "goerli";
+enum SupportedNetwork {
+  ropsten = "ropsten",
+  homestead = "homestead",
+  rinkeby = "rinkeby",
+  goerli = "goerli",
+  maticmum = "maticmum",
+}
+
+type Network = keyof typeof SupportedNetwork;
+
 export const Verify: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState("");
   const [status, setStatus] = useState<Status>("INITIAL");
@@ -12,41 +22,59 @@ export const Verify: React.FunctionComponent = () => {
   }, [rawDocument]);
 
   const [fragments, setFragments] = useState<VerificationFragment[]>([]);
-  const [network, setNetwork] = useState<Network>("ropsten");
+  const [network, setNetwork] = useState<Network>(SupportedNetwork.ropsten);
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-3xl mb-4">Verify an OpenAttestation document</h1>
       <button
-        className={`btn-blue-small font-bold mb-2 mr-1 ${network === "ropsten" ? "selected" : "unselected"}`}
+        className={`btn-blue-small font-bold mb-2 mr-1 ${
+          network === SupportedNetwork.ropsten ? "selected" : "unselected"
+        }`}
         onClick={async () => {
-          setNetwork("ropsten");
+          setNetwork(SupportedNetwork.ropsten);
         }}
       >
         Ropsten
       </button>
       <button
-        className={`btn-blue-small font-bold mb-2 mr-1 ${network === "homestead" ? "selected" : "unselected"}`}
+        className={`btn-blue-small font-bold mb-2 mr-1 ${
+          network === SupportedNetwork.homestead ? "selected" : "unselected"
+        }`}
         onClick={async () => {
-          setNetwork("homestead");
+          setNetwork(SupportedNetwork.homestead);
         }}
       >
         Mainnet
       </button>
       <button
-        className={`btn-blue-small font-bold mb-2 mr-1 ${network === "rinkeby" ? "selected" : "unselected"}`}
+        className={`btn-blue-small font-bold mb-2 mr-1 ${
+          network === SupportedNetwork.rinkeby ? "selected" : "unselected"
+        }`}
         onClick={async () => {
-          setNetwork("rinkeby");
+          setNetwork(SupportedNetwork.rinkeby);
         }}
       >
         Rinkeby
       </button>
       <button
-        className={`btn-blue-small font-bold mb-2 mr-1 ${network === "goerli" ? "selected" : "unselected"}`}
+        className={`btn-blue-small font-bold mb-2 mr-1 ${
+          network === SupportedNetwork.goerli ? "selected" : "unselected"
+        }`}
         onClick={async () => {
-          setNetwork("goerli");
+          setNetwork(SupportedNetwork.goerli);
         }}
       >
         Goerli
+      </button>
+      <button
+        className={`btn-blue-small font-bold mb-2 mr-1 ${
+          network === SupportedNetwork.maticmum ? "selected" : "unselected"
+        }`}
+        onClick={async () => {
+          setNetwork(SupportedNetwork.maticmum);
+        }}
+      >
+        Mumbai
       </button>
       <textarea
         className="w-full px-3 py-2 text-gray-800 border-2 rounded-lg focus:shadow-outline"
@@ -61,7 +89,9 @@ export const Verify: React.FunctionComponent = () => {
           try {
             if (rawDocument) {
               setStatus("PENDING");
-              const verify = verificationBuilder(openAttestationVerifiers, { network });
+              const verify = verificationBuilder(openAttestationVerifiers, {
+                provider: new providers.InfuraProvider(network),
+              });
               const fragments = await verify(JSON.parse(rawDocument));
               setFragments(fragments);
               setStatus("SUCCEED");
