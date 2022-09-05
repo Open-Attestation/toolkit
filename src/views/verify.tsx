@@ -5,11 +5,11 @@ import { FailedAlert, SucceedAlert } from "../components/alert";
 import { Status } from "../shared";
 
 enum SupportedNetwork {
-  ropsten = "ropsten",
-  homestead = "homestead",
-  rinkeby = "rinkeby",
-  goerli = "goerli",
-  maticmum = "maticmum",
+  ropsten = "Ropsten",
+  homestead = "Mainnet",
+  rinkeby = "Rinkeby",
+  goerli = "Goerli",
+  maticmum = "Mumbai",
 }
 
 type Network = keyof typeof SupportedNetwork;
@@ -22,60 +22,24 @@ export const Verify: React.FunctionComponent = () => {
   }, [rawDocument]);
 
   const [fragments, setFragments] = useState<VerificationFragment[]>([]);
-  const [network, setNetwork] = useState<Network>(SupportedNetwork.ropsten);
+  const [network, setNetwork] = useState<Network>("ropsten");
+
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-3xl mb-4">Verify an OpenAttestation document</h1>
-      <button
-        className={`btn-blue-small font-bold mb-2 mr-1 ${
-          network === SupportedNetwork.ropsten ? "selected" : "unselected"
-        }`}
-        onClick={async () => {
-          setNetwork(SupportedNetwork.ropsten);
-        }}
-      >
-        Ropsten
-      </button>
-      <button
-        className={`btn-blue-small font-bold mb-2 mr-1 ${
-          network === SupportedNetwork.homestead ? "selected" : "unselected"
-        }`}
-        onClick={async () => {
-          setNetwork(SupportedNetwork.homestead);
-        }}
-      >
-        Mainnet
-      </button>
-      <button
-        className={`btn-blue-small font-bold mb-2 mr-1 ${
-          network === SupportedNetwork.rinkeby ? "selected" : "unselected"
-        }`}
-        onClick={async () => {
-          setNetwork(SupportedNetwork.rinkeby);
-        }}
-      >
-        Rinkeby
-      </button>
-      <button
-        className={`btn-blue-small font-bold mb-2 mr-1 ${
-          network === SupportedNetwork.goerli ? "selected" : "unselected"
-        }`}
-        onClick={async () => {
-          setNetwork(SupportedNetwork.goerli);
-        }}
-      >
-        Goerli
-      </button>
-      <button
-        className={`btn-blue-small font-bold mb-2 mr-1 ${
-          network === SupportedNetwork.maticmum ? "selected" : "unselected"
-        }`}
-        onClick={async () => {
-          setNetwork(SupportedNetwork.maticmum);
-        }}
-      >
-        Mumbai
-      </button>
+      {Object.entries(SupportedNetwork).map(([key, value]) => {
+        return (
+          <button
+            key={key}
+            className={`btn-blue-small font-bold mb-2 mr-1 ${network === key ? "selected" : "unselected"}`}
+            onClick={async () => {
+              setNetwork(key as Network);
+            }}
+          >
+            {value}
+          </button>
+        );
+      })}
       <textarea
         className="w-full px-3 py-2 text-gray-800 border-2 rounded-lg focus:shadow-outline"
         onChange={(e) => setRawDocument(e.target.value)}
