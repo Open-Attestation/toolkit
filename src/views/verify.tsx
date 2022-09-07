@@ -5,21 +5,19 @@ import { FailedAlert, SucceedAlert } from "../components/alert";
 import { Status } from "../shared";
 
 enum Network {
-  mainnet = 1,
-  ropsten = 3,
-  rinkeby = 4,
-  goerli = 5,
-  matic = 137,
-  maticmum = 80001,
+  mainnet,
+  ropsten,
+  rinkeby,
+  goerli,
+  matic,
+  maticmum,
 }
 
 type network = keyof typeof Network;
-type id = `${Network}`; // note that this converts number to string though
 
 interface SupportedNetwork {
   label: string;
   network: network;
-  id: id;
   type: "production" | "test";
 }
 
@@ -27,37 +25,31 @@ const supportedNetworks: Array<SupportedNetwork> = [
   {
     label: "Mainnet",
     network: "mainnet",
-    id: "1",
     type: "production",
-  },
-  {
-    label: "Ropsten",
-    network: "ropsten",
-    id: "3",
-    type: "test",
-  },
-  {
-    label: "Rinkeby",
-    network: "rinkeby",
-    id: "4",
-    type: "test",
   },
   {
     label: "Goerli",
     network: "goerli",
-    id: "5",
     type: "test",
   },
   {
     label: "Polygon",
     network: "matic",
-    id: "137",
     type: "production",
   },
   {
     label: "Polygon Mumbai",
     network: "maticmum",
-    id: "80001",
+    type: "test",
+  },
+  {
+    label: "Ropsten",
+    network: "ropsten",
+    type: "test",
+  },
+  {
+    label: "Rinkeby",
+    network: "rinkeby",
     type: "test",
   },
 ];
@@ -89,7 +81,7 @@ export const Verify: React.FunctionComponent = () => {
   }, [rawDocument]);
 
   const [fragments, setFragments] = useState<VerificationFragment[]>([]);
-  const [network, setNetwork] = useState<network>("ropsten");
+  const [network, setNetwork] = useState<network>("goerli");
 
   return (
     <div className="container mx-auto py-6">
@@ -100,7 +92,7 @@ export const Verify: React.FunctionComponent = () => {
           {productionNetworks.map((item) => {
             return (
               <NetworkButton
-                key={item.id}
+                key={item.network}
                 isNetworkSelected={item.network === network}
                 onNetworkClick={async () => {
                   setNetwork(item.network);
@@ -118,7 +110,7 @@ export const Verify: React.FunctionComponent = () => {
           {testNetworks.map((item) => {
             return (
               <NetworkButton
-                key={item.id}
+                key={item.network}
                 isNetworkSelected={item.network === network}
                 onNetworkClick={async () => {
                   setNetwork(item.network);
