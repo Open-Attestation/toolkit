@@ -11,6 +11,7 @@ enum Network {
   goerli,
   matic,
   maticmum,
+  sepolia,
 }
 
 type network = keyof typeof Network;
@@ -19,38 +20,61 @@ interface SupportedNetwork {
   label: string;
   network: network;
   type: "production" | "test";
+  provider: () => providers.Provider;
 }
+
+const infuraProvider =
+  (networkName: string): (() => providers.Provider) =>
+  () =>
+    new providers.InfuraProvider(networkName);
+
+const jsonRpcProvider =
+  (url: string): (() => providers.Provider) =>
+  () =>
+    new providers.JsonRpcProvider(url);
 
 const supportedNetworks: Array<SupportedNetwork> = [
   {
     label: "Mainnet",
     network: "mainnet",
     type: "production",
+    provider: infuraProvider("homestead"),
   },
   {
     label: "Goerli",
     network: "goerli",
     type: "test",
+    provider: infuraProvider("goerli"),
   },
   {
     label: "Polygon",
     network: "matic",
     type: "production",
+    provider: infuraProvider("matic"),
   },
   {
     label: "Polygon Mumbai",
     network: "maticmum",
     type: "test",
+    provider: infuraProvider("maticmum"),
+  },
+  {
+    label: "Sepolia",
+    network: "sepolia",
+    type: "test",
+    provider: jsonRpcProvider("https://rpc.sepolia.org"),
   },
   {
     label: "Ropsten",
     network: "ropsten",
     type: "test",
+    provider: infuraProvider("ropsten"),
   },
   {
     label: "Rinkeby",
     network: "rinkeby",
     type: "test",
+    provider: infuraProvider("rinkeby"),
   },
 ];
 
@@ -135,9 +159,17 @@ export const Verify: React.FunctionComponent = () => {
           try {
             if (rawDocument) {
               setStatus("PENDING");
+              const supportedNetwork = supportedNetworks.find((item) => item.network === network);
+
+              if (supportedNetwork === undefined) {
+                throw new TypeError("Supported network not found!");
+              }
+
+              const provider = supportedNetwork?.provider;
               const verify = verificationBuilder(openAttestationVerifiers, {
-                provider: new providers.InfuraProvider(network),
+                provider: provider(),
               });
+
               const fragments = await verify(JSON.parse(rawDocument));
               setFragments(fragments);
               setStatus("SUCCEED");
