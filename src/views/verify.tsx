@@ -165,7 +165,7 @@ export const Verify: React.FunctionComponent = () => {
                 throw new TypeError("Supported network not found!");
               }
 
-              const provider = supportedNetwork?.provider;
+              const provider = supportedNetwork.provider;
               const verify = verificationBuilder(openAttestationVerifiers, {
                 provider: provider(),
               });
