@@ -165,9 +165,8 @@ export const Verify: React.FunctionComponent = () => {
                 throw new Error("Supported network not found!");
               }
 
-              const provider = supportedNetwork.provider;
               const verify = verificationBuilder(openAttestationVerifiers, {
-                provider: provider(),
+                provider: supportedNetwork.provider(),
               });
 
               const fragments = await verify(JSON.parse(rawDocument));
