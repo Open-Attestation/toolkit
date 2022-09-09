@@ -162,7 +162,7 @@ export const Verify: React.FunctionComponent = () => {
               const supportedNetwork = supportedNetworks.find((item) => item.network === network);
 
               if (supportedNetwork === undefined) {
-                throw new TypeError("Supported network not found!");
+                throw new Error("Supported network not found!");
               }
 
               const provider = supportedNetwork.provider;
