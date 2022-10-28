@@ -6,8 +6,6 @@ import { Status } from "../shared";
 
 enum Network {
   mainnet,
-  ropsten,
-  rinkeby,
   goerli,
   matic,
   maticmum,
@@ -63,18 +61,6 @@ const supportedNetworks: Array<SupportedNetwork> = [
     network: "sepolia",
     type: "test",
     provider: jsonRpcProvider("https://rpc.sepolia.org"),
-  },
-  {
-    label: "Ropsten",
-    network: "ropsten",
-    type: "test",
-    provider: infuraProvider("ropsten"),
-  },
-  {
-    label: "Rinkeby",
-    network: "rinkeby",
-    type: "test",
-    provider: infuraProvider("rinkeby"),
   },
 ];
 
