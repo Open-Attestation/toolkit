@@ -20,17 +20,9 @@
     "@types/react": "^17.0.6",
     "@types/react-dom": "^17.0.5",
     "@types/react-router-dom": "^5.1.7",
-    "@typescript-eslint/eslint-plugin": "^4.25.0",
-    "@typescript-eslint/parser": "^4.25.0",
-    "eslint": "^7.27.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-testing-library": "^4.6.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "eslint": "^8.31.0",
     "http-server": "^0.12.3",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.3.0",
@@ -47,112 +39,12 @@
     "build:css": "postcss src/tailwind.css -o src/index.css",
     "build:js": "react-scripts build",
     "eject": "react-scripts eject",
-    "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
+    "lint": "eslint ./src --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "start": "npm-run-all -p start:*",
     "start:css": "postcss src/tailwind.css -o src/index.css --watch",
     "start:js": "sleep 2 && react-scripts start",
     "test": "react-scripts test"
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "env": {
-      "browser": true,
-      "jest": true
-    },
-    "extends": [
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react/recommended",
-      "plugin:prettier/recommended",
-      "plugin:testing-library/react",
-      "plugin:import/typescript"
-    ],
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "plugins": [
-      "import",
-      "react",
-      "@typescript-eslint",
-      "react-hooks",
-      "testing-library"
-    ],
-    "settings": {
-      "import/resolver": {
-        "typescript": {
-          "alwaysTryTypes": true
-        }
-      }
-    },
-    "rules": {
-      "@typescript-eslint/explicit-function-return-type": [
-        "warn",
-        {
-          "allowExpressions": true,
-          "allowTypedFunctionExpressions": true
-        }
-      ],
-      "@typescript-eslint/explicit-member-accessibility": "off",
-      "@typescript-eslint/no-use-before-define": "off",
-      "array-callback-return": "warn",
-      "import/no-default-export": "error",
-      "import/no-unresolved": "error",
-      "import/order": [
-        "error",
-        {
-          "alphabetize": {
-            "order": "asc"
-          }
-        }
-      ],
-      "jest/no-hooks": "off",
-      "no-unused-vars": "off",
-      "react/no-unescaped-entities": [
-        "error",
-        {
-          "forbid": [
-            ">",
-            "}",
-            "\""
-          ]
-        }
-      ],
-      "react/prop-types": "off",
-      "react/self-closing-comp": "error",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "./**/*.js"
-        ],
-        "rules": {
-          "@typescript-eslint/no-var-requires": "off"
-        }
-      },
-      {
-        "files": [
-          "./**/*.stories.tsx"
-        ],
-        "rules": {
-          "import/no-default-export": "off",
-          "@typescript-eslint/explicit-function-return-type": "off"
-        }
-      },
-      {
-        "files": [
-          "*.test.ts",
-          "*.test.tsx"
-        ],
-        "extends": [
-          "plugin:jest/all"
-        ],
-        "rules": {
-          "jest/prefer-expect-assertions": "off"
-        }
-      }
-    ]
   },
   "prettier": {
     "printWidth": 120
