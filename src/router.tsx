@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
-import { BrowserRouter, Link, Switch } from "react-router-dom";
+import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 import { Breadcrumb } from "./components/breadcrumb";
 import oaLogo from "./images/oa.svg";
-import { Routes, routes } from "./routes";
+import { routes } from "./routes";
 
 export const Router = (): ReactElement => {
   return (
@@ -44,9 +44,11 @@ export const Router = (): ReactElement => {
         </section>
         <section className="bg-gray-200 flex-1 py-4">
           <Breadcrumb />
-          <Switch>
-            <Routes routes={routes} />
-          </Switch>
+          <Routes>
+            {routes.map((route) => (
+              <Route key={route.path} {...route} />
+            ))}
+          </Routes>
         </section>
       </main>
       <footer className="py-6 text-white bg-navy">
