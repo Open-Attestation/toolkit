@@ -1,13 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { routes, RouteProps } from "./../routes";
-
-interface ToolsProps extends RouteProps {
-  title: string;
-}
+import { routes } from "./../routes";
 
 export const Home: React.FunctionComponent = () => {
-  const tools = routes.filter((route) => route.path !== "/") as ToolsProps[];
+  const tools = routes.filter((route) => route.path !== "/");
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 container mx-auto">
