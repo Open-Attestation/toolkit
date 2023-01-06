@@ -1,25 +1,10 @@
+import { networkName } from "@govtechsg/tradetrust-utils/constants/network";
+import { CHAIN_ID, SUPPORTED_CHAINS, chainInfo } from "@govtechsg/tradetrust-utils/constants/supportedChains";
 import { isValid, openAttestationVerifiers, verificationBuilder, VerificationFragment } from "@govtechsg/oa-verify";
 import { providers } from "ethers";
 import React, { useEffect, useState } from "react";
 import { FailedAlert, SucceedAlert } from "../components/alert";
 import { Status } from "../shared";
-
-enum Network {
-  mainnet,
-  goerli,
-  matic,
-  maticmum,
-  sepolia,
-}
-
-type network = keyof typeof Network;
-
-interface SupportedNetwork {
-  label: string;
-  network: network;
-  type: "production" | "test";
-  provider: () => providers.Provider;
-}
 
 const infuraProvider =
   (networkName: string): (() => providers.Provider) =>
@@ -31,41 +16,34 @@ const jsonRpcProvider =
   () =>
     new providers.JsonRpcProvider(url);
 
-const supportedNetworks: Array<SupportedNetwork> = [
-  {
-    label: "Mainnet",
-    network: "mainnet",
-    type: "production",
+type supportedNetworks = Omit<Record<CHAIN_ID, chainInfo & { provider: () => providers.Provider }>, CHAIN_ID.local>;
+
+const SUPPORTED_NETWORKS: supportedNetworks = {
+  [CHAIN_ID.mainnet]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.mainnet],
     provider: infuraProvider("homestead"),
   },
-  {
-    label: "Goerli",
-    network: "goerli",
-    type: "test",
-    provider: infuraProvider("goerli"),
-  },
-  {
-    label: "Polygon",
-    network: "matic",
-    type: "production",
+  [CHAIN_ID.matic]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.matic],
     provider: infuraProvider("matic"),
   },
-  {
-    label: "Polygon Mumbai",
-    network: "maticmum",
-    type: "test",
+  [CHAIN_ID.maticmum]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.maticmum],
     provider: infuraProvider("maticmum"),
   },
-  {
-    label: "Sepolia",
-    network: "sepolia",
-    type: "test",
-    provider: jsonRpcProvider("https://rpc.sepolia.org"),
+  [CHAIN_ID.goerli]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.goerli],
+    provider: infuraProvider("goerli"),
   },
-];
+  [CHAIN_ID.sepolia]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.sepolia].rpcUrl as string),
+  },
+};
 
-const productionNetworks = supportedNetworks.filter((item) => item.type === "production");
-const testNetworks = supportedNetworks.filter((item) => item.type === "test");
+const networks = Object.values(SUPPORTED_NETWORKS);
+const productionNetworks = networks.filter((item) => item.type === "production");
+const testNetworks = networks.filter((item) => item.type === "test");
 
 const NetworkButton: React.FunctionComponent<{
   isNetworkSelected: boolean;
@@ -91,7 +69,7 @@ export const Verify: React.FunctionComponent = () => {
   }, [rawDocument]);
 
   const [fragments, setFragments] = useState<VerificationFragment[]>([]);
-  const [network, setNetwork] = useState<network>("goerli");
+  const [network, setNetwork] = useState<networkName>("goerli");
 
   return (
     <div className="container mx-auto py-6">
@@ -99,16 +77,16 @@ export const Verify: React.FunctionComponent = () => {
       <div className="flex flex-wrap items-center py-2">
         <p className="text-xs font-medium uppercase">Production:</p>
         <div className="w-full">
-          {productionNetworks.map((item) => {
+          {productionNetworks.map((chain) => {
             return (
               <NetworkButton
-                key={item.network}
-                isNetworkSelected={item.network === network}
+                key={chain.name}
+                isNetworkSelected={chain.name === network}
                 onNetworkClick={async () => {
-                  setNetwork(item.network);
+                  setNetwork(chain.name);
                 }}
               >
-                {item.label}
+                {chain.label}
               </NetworkButton>
             );
           })}
@@ -117,16 +95,16 @@ export const Verify: React.FunctionComponent = () => {
       <div className="flex flex-wrap items-center py-2">
         <p className="text-xs font-medium uppercase">Testnets:</p>
         <div className="w-full">
-          {testNetworks.map((item) => {
+          {testNetworks.map((chain) => {
             return (
               <NetworkButton
-                key={item.network}
-                isNetworkSelected={item.network === network}
+                key={chain.name}
+                isNetworkSelected={chain.name === network}
                 onNetworkClick={async () => {
-                  setNetwork(item.network);
+                  setNetwork(chain.name);
                 }}
               >
-                {item.label}
+                {chain.label}
               </NetworkButton>
             );
           })}
@@ -145,7 +123,7 @@ export const Verify: React.FunctionComponent = () => {
           try {
             if (rawDocument) {
               setStatus("PENDING");
-              const supportedNetwork = supportedNetworks.find((item) => item.network === network);
+              const supportedNetwork = networks.find((chain) => chain.name === network);
 
               if (supportedNetwork === undefined) {
                 throw new Error("Supported network not found!");
