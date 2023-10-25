@@ -9,12 +9,12 @@ const SAMPLE = {
   q: {
     type: "DOCUMENT",
     payload: {
-      uri: "https://api-vaccine.storage.staging.notarise.io/document/c716022a-f3d0-43b5-bd53-bdd3aefe82c7",
+      uri: "https://api-vaccine.storage.staging.notarise.io/document/fd2fb343-dda5-44aa-9c34-9fb860061459",
       permittedActions: ["VIEW", "STORE"],
       redirect: "https://www.verify.gov.sg/verify",
     },
   },
-  anchor: { key: "af52904a968adfa2a66d2cb5f2bd076e1b395247c297d06bdc7760d48b0d3160" },
+  anchor: { key: "14b4f972d86511c2b9fc305e7148a49763243acb6225f919a1ff16dc056c8a14" },
 };
 
 const action = stringifyAndEncode(SAMPLE.q);
