@@ -16,7 +16,10 @@ const jsonRpcProvider =
   () =>
     new providers.JsonRpcProvider(url);
 
-type supportedNetworks = Omit<Record<CHAIN_ID, chainInfo & { provider: () => providers.Provider }>, CHAIN_ID.local>;
+type supportedNetworks = Omit<
+  Record<CHAIN_ID, chainInfo & { provider: () => providers.Provider }>,
+  CHAIN_ID.local | CHAIN_ID.goerli
+>;
 
 const SUPPORTED_NETWORKS: supportedNetworks = {
   [CHAIN_ID.mainnet]: {
