@@ -31,10 +31,6 @@ const SUPPORTED_NETWORKS: supportedNetworks = {
     ...SUPPORTED_CHAINS[CHAIN_ID.maticmum],
     provider: infuraProvider("maticmum"),
   },
-  [CHAIN_ID.goerli]: {
-    ...SUPPORTED_CHAINS[CHAIN_ID.goerli],
-    provider: infuraProvider("goerli"),
-  },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
     provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.sepolia].rpcUrl as string),
@@ -69,7 +65,7 @@ export const Verify: React.FunctionComponent = () => {
   }, [rawDocument]);
 
   const [fragments, setFragments] = useState<VerificationFragment[]>([]);
-  const [network, setNetwork] = useState<networkName>("goerli");
+  const [network, setNetwork] = useState<networkName>("sepolia");
 
   return (
     <div className="container mx-auto py-6">
