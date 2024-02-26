@@ -41,6 +41,14 @@ const networks = Object.values(SUPPORTED_NETWORKS);
 const productionNetworks = networks.filter((item) => item.type === "production");
 const testNetworks = networks.filter((item) => item.type === "test");
 
+// Put default network to the first value
+const DEFAULT_NETWORK = SUPPORTED_NETWORKS[CHAIN_ID.sepolia];
+const defaultNetworkIndex = testNetworks.findIndex(
+  (chain) => chain.label.toLowerCase() === DEFAULT_NETWORK.name.toLowerCase()
+);
+const defaultNetwork = testNetworks.splice(defaultNetworkIndex, 1)[0];
+testNetworks.unshift(defaultNetwork);
+
 const NetworkButton: React.FunctionComponent<{
   isNetworkSelected: boolean;
   onNetworkClick: () => void;
@@ -65,7 +73,7 @@ export const Verify: React.FunctionComponent = () => {
   }, [rawDocument]);
 
   const [fragments, setFragments] = useState<VerificationFragment[]>([]);
-  const [network, setNetwork] = useState<networkName>("sepolia");
+  const [network, setNetwork] = useState<networkName>(DEFAULT_NETWORK.name);
 
   return (
     <div className="container mx-auto py-6">
