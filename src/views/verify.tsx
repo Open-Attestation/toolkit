@@ -1,10 +1,10 @@
-import { networkName } from "@govtechsg/tradetrust-utils/constants/network";
-import { CHAIN_ID, SUPPORTED_CHAINS, chainInfo } from "@govtechsg/tradetrust-utils/constants/supportedChains";
 import { isValid, openAttestationVerifiers, verificationBuilder, VerificationFragment } from "@govtechsg/oa-verify";
 import { providers } from "ethers";
 import React, { useEffect, useState } from "react";
 import { FailedAlert, SucceedAlert } from "../components/alert";
 import { Status } from "../shared";
+import { CHAIN_ID, SUPPORTED_CHAINS, chainInfo } from "../types/supportedChains";
+import { networkName } from "../types/network";
 
 const infuraProvider =
   (networkName: string): (() => providers.Provider) =>
@@ -16,10 +16,7 @@ const jsonRpcProvider =
   () =>
     new providers.JsonRpcProvider(url);
 
-type supportedNetworks = Omit<
-  Record<CHAIN_ID, chainInfo & { provider: () => providers.Provider }>,
-  CHAIN_ID.local | CHAIN_ID.goerli
->;
+type supportedNetworks = Omit<Record<CHAIN_ID, chainInfo & { provider: () => providers.Provider }>, CHAIN_ID.local>;
 
 const SUPPORTED_NETWORKS: supportedNetworks = {
   [CHAIN_ID.mainnet]: {
