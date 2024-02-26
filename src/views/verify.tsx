@@ -1,10 +1,10 @@
-import { networkName } from "@govtechsg/tradetrust-utils/constants/network";
-import { CHAIN_ID, SUPPORTED_CHAINS, chainInfo } from "@govtechsg/tradetrust-utils/constants/supportedChains";
 import { isValid, openAttestationVerifiers, verificationBuilder, VerificationFragment } from "@govtechsg/oa-verify";
 import { providers } from "ethers";
 import React, { useEffect, useState } from "react";
 import { FailedAlert, SucceedAlert } from "../components/alert";
 import { Status } from "../shared";
+import { CHAIN_ID, SUPPORTED_CHAINS, chainInfo } from "../types/supportedChains";
+import { networkName } from "../types/network";
 
 const infuraProvider =
   (networkName: string): (() => providers.Provider) =>
@@ -31,10 +31,6 @@ const SUPPORTED_NETWORKS: supportedNetworks = {
     ...SUPPORTED_CHAINS[CHAIN_ID.maticmum],
     provider: infuraProvider("maticmum"),
   },
-  [CHAIN_ID.goerli]: {
-    ...SUPPORTED_CHAINS[CHAIN_ID.goerli],
-    provider: infuraProvider("goerli"),
-  },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
     provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.sepolia].rpcUrl as string),
@@ -44,6 +40,14 @@ const SUPPORTED_NETWORKS: supportedNetworks = {
 const networks = Object.values(SUPPORTED_NETWORKS);
 const productionNetworks = networks.filter((item) => item.type === "production");
 const testNetworks = networks.filter((item) => item.type === "test");
+
+// Put default network to the first value
+const DEFAULT_NETWORK = SUPPORTED_NETWORKS[CHAIN_ID.sepolia];
+const defaultNetworkIndex = testNetworks.findIndex(
+  (chain) => chain.label.toLowerCase() === DEFAULT_NETWORK.name.toLowerCase()
+);
+const defaultNetwork = testNetworks.splice(defaultNetworkIndex, 1)[0];
+testNetworks.unshift(defaultNetwork);
 
 const NetworkButton: React.FunctionComponent<{
   isNetworkSelected: boolean;
@@ -69,7 +73,7 @@ export const Verify: React.FunctionComponent = () => {
   }, [rawDocument]);
 
   const [fragments, setFragments] = useState<VerificationFragment[]>([]);
-  const [network, setNetwork] = useState<networkName>("goerli");
+  const [network, setNetwork] = useState<networkName>(DEFAULT_NETWORK.name);
 
   return (
     <div className="container mx-auto py-6">
