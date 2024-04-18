@@ -31,14 +31,14 @@ describe("supportedChains", () => {
     expect(explorerUrl).toBe("https://polygonscan.com");
   });
 
-  it("should maticmum chain info correctly", () => {
-    const { id, name, type, currency, explorerUrl } = SUPPORTED_CHAINS[CHAIN_ID.maticmum];
+  it("should polygon amoy chain info correctly", () => {
+    const { id, name, type, currency, explorerUrl } = SUPPORTED_CHAINS[CHAIN_ID.amoy];
 
-    expect(id).toBe(CHAIN_ID.maticmum);
-    expect(name).toBe("maticmum");
+    expect(id).toBe(CHAIN_ID.amoy);
+    expect(name).toBe("amoy");
     expect(type).toBe("test");
     expect(currency).toBe("MATIC");
-    expect(explorerUrl).toBe("https://mumbai.polygonscan.com");
+    expect(explorerUrl).toBe("https://www.oklink.com/amoy");
   });
 
   it("should sepolia chain info correctly", () => {

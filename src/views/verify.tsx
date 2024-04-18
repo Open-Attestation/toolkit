@@ -27,9 +27,9 @@ const SUPPORTED_NETWORKS: supportedNetworks = {
     ...SUPPORTED_CHAINS[CHAIN_ID.matic],
     provider: infuraProvider("matic"),
   },
-  [CHAIN_ID.maticmum]: {
-    ...SUPPORTED_CHAINS[CHAIN_ID.maticmum],
-    provider: infuraProvider("maticmum"),
+  [CHAIN_ID.amoy]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.amoy],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.amoy].rpcUrl as string),
   },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],

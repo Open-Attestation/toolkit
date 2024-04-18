@@ -4,7 +4,7 @@ export enum CHAIN_ID {
   local = "1337",
   mainnet = "1",
   matic = "137",
-  maticmum = "80001",
+  amoy = "80002",
   sepolia = "11155111",
 }
 
@@ -59,18 +59,18 @@ export const SUPPORTED_CHAINS: supportedChains = {
       decimals: 18,
     },
   },
-  [CHAIN_ID.maticmum]: {
-    id: CHAIN_ID.maticmum,
-    label: "Polygon Mumbai",
-    name: "maticmum",
+  [CHAIN_ID.amoy]: {
+    id: CHAIN_ID.amoy,
+    label: "Polygon Amoy",
+    name: "amoy",
     type: "test",
     currency: "MATIC",
-    explorerUrl: "https://mumbai.polygonscan.com",
-    explorerApiUrl: "https://api-testnet.polygonscan.com",
-    rpcUrl: "https://rpc-mumbai.matic.today",
+    explorerUrl: "https://www.oklink.com/amoy",
+    explorerApiUrl: "https://api-amoy.polygonscan.com",
+    rpcUrl: "https://rpc-amoy.polygon.technology",
     nativeCurrency: {
       name: "MATIC",
-      symbol: "mMATIC",
+      symbol: "aMATIC",
       decimals: 18,
     },
   },
