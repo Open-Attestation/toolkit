@@ -52,25 +52,19 @@ export const Wrap: React.FunctionComponent = () => {
       <h1 className="text-3xl mb-4">(Un)Wrap an OpenAttestation document</h1>
       <button
         className={`btn-blue-small font-bold mb-2 mr-1 ${version === "2.0" ? "selected" : "unselected"}`}
-        onClick={async () => {
-          setVersion("2.0");
-        }}
+        onClick={() => setVersion("2.0")}
       >
         {"2.0"}
       </button>
       <button
         className={`btn-blue-small font-bold mb-2 mr-1 ${version === "3.0" ? "selected" : "unselected"}`}
-        onClick={async () => {
-          setVersion("3.0");
-        }}
+        onClick={() => setVersion("3.0")}
       >
         {"3.0"}
       </button>
       <button
         className={`btn-blue-small font-bold mb-2 mr-1 ${version === "4.0" ? "selected" : "unselected"}`}
-        onClick={async () => {
-          setVersion("4.0");
-        }}
+        onClick={() => setVersion("4.0")}
       >
         {"4.0"}
       </button>

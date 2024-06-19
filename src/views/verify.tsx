@@ -86,9 +86,7 @@ export const Verify: React.FunctionComponent = () => {
               <NetworkButton
                 key={chain.name}
                 isNetworkSelected={chain.name === network}
-                onNetworkClick={async () => {
-                  setNetwork(chain.name);
-                }}
+                onNetworkClick={() => setNetwork(chain.name)}
               >
                 {chain.label}
               </NetworkButton>
@@ -104,9 +102,7 @@ export const Verify: React.FunctionComponent = () => {
               <NetworkButton
                 key={chain.name}
                 isNetworkSelected={chain.name === network}
-                onNetworkClick={async () => {
-                  setNetwork(chain.name);
-                }}
+                onNetworkClick={() => setNetwork(chain.name)}
               >
                 {chain.label}
               </NetworkButton>
