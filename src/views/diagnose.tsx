@@ -2,8 +2,7 @@ import { utils } from "@govtechsg/open-attestation";
 import React, { useEffect, useState } from "react";
 import { FailedAlert, SucceedAlert } from "../components/alert";
 
-// sad not exported :(
-type Version = "2.0" | "3.0";
+type Version = utils.Version;
 type Kind = "wrapped" | "signed";
 export const Diagnose: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState("");
@@ -37,35 +36,33 @@ export const Diagnose: React.FunctionComponent = () => {
       <div>
         <button
           className={`btn-blue-small font-bold mb-2 mr-1 ${version === "2.0" ? "selected" : "unselected"}`}
-          onClick={async () => {
-            setVersion("2.0");
-          }}
+          onClick={() => setVersion("2.0")}
         >
           v2.0
         </button>
         <button
           className={`btn-blue-small font-bold mb-2 mr-1 ${version === "3.0" ? "selected" : "unselected"}`}
-          onClick={async () => {
-            setVersion("3.0");
-          }}
+          onClick={() => setVersion("3.0")}
         >
           v3.0
+        </button>
+        <button
+          className={`btn-blue-small font-bold mb-2 mr-1 ${version === "4.0" ? "selected" : "unselected"}`}
+          onClick={() => setVersion("4.0")}
+        >
+          v4.0
         </button>
       </div>
       <div>
         <button
           className={`btn-blue-small font-bold mb-2 mr-1 ${kind === "wrapped" ? "selected" : "unselected"}`}
-          onClick={async () => {
-            setKind("wrapped");
-          }}
+          onClick={() => setKind("wrapped")}
         >
           Wrapped
         </button>
         <button
           className={`btn-blue-small font-bold mb-2 mr-1 ${kind === "signed" ? "selected" : "unselected"}`}
-          onClick={async () => {
-            setKind("signed");
-          }}
+          onClick={() => setKind("signed")}
         >
           Signed
         </button>

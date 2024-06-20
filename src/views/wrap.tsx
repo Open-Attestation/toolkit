@@ -4,11 +4,12 @@ import {
   utils,
   __unsafe__use__it__at__your__own__risks__wrapDocument as wrapDocumentV3,
 } from "@govtechsg/open-attestation";
+import { wrapDocument as wrapDocumentV4 } from "@govtechsg/open-attestation/4.0/wrap";
 import React, { useEffect, useState } from "react";
 import { FailedAlert, SucceedAlert } from "../components/alert";
 import { Status } from "../shared";
 
-type Version = "2.0" | "3.0";
+type Version = utils.Version;
 
 export const Wrap: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState("");
@@ -30,7 +31,9 @@ export const Wrap: React.FunctionComponent = () => {
 
     if (rawDocument) {
       const isRawDocument =
-        utils.isRawV2Document(JSON.parse(rawDocument)) || utils.isRawV3Document(JSON.parse(rawDocument));
+        utils.isRawV2Document(JSON.parse(rawDocument)) ||
+        utils.isRawV3Document(JSON.parse(rawDocument)) ||
+        utils.isRawV4Document(JSON.parse(rawDocument));
       setIsToWrap(isRawDocument);
       setErrors(
         utils.diagnose({
@@ -49,19 +52,21 @@ export const Wrap: React.FunctionComponent = () => {
       <h1 className="text-3xl mb-4">(Un)Wrap an OpenAttestation document</h1>
       <button
         className={`btn-blue-small font-bold mb-2 mr-1 ${version === "2.0" ? "selected" : "unselected"}`}
-        onClick={async () => {
-          setVersion("2.0");
-        }}
+        onClick={() => setVersion("2.0")}
       >
         {"2.0"}
       </button>
       <button
         className={`btn-blue-small font-bold mb-2 mr-1 ${version === "3.0" ? "selected" : "unselected"}`}
-        onClick={async () => {
-          setVersion("3.0");
-        }}
+        onClick={() => setVersion("3.0")}
       >
         {"3.0"}
+      </button>
+      <button
+        className={`btn-blue-small font-bold mb-2 mr-1 ${version === "4.0" ? "selected" : "unselected"}`}
+        onClick={() => setVersion("4.0")}
+      >
+        {"4.0"}
       </button>
       <textarea
         className="w-full px-3 py-2 text-gray-800 border-2 rounded-lg focus:shadow-outline"
@@ -81,7 +86,9 @@ export const Wrap: React.FunctionComponent = () => {
                   JSON.stringify(
                     version === "2.0"
                       ? wrapDocument(JSON.parse(rawDocument))
-                      : await wrapDocumentV3(JSON.parse(rawDocument)),
+                      : version === "3.0"
+                      ? await wrapDocumentV3(JSON.parse(rawDocument))
+                      : await wrapDocumentV4(JSON.parse(rawDocument)),
                     null,
                     2
                   )
@@ -100,7 +107,7 @@ export const Wrap: React.FunctionComponent = () => {
       >
         Wrap
       </button>
-      {version !== "3.0" && ( // seems like no v3 unsalt yet
+      {version === "2.0" && ( // v3 and v4 has no need for unwrapping (i.e. unsalt)
         <button
           disabled={errors.length > 0 || isToWrap}
           className="btn-primary"
