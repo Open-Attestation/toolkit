@@ -1,2 +1,2 @@
 X-Frame-Options: DENY
-Content-Security-Policy: default-src *.sepolia.org *.polygon.technology dns.google cloudflare-dns.com; frame-ancestors 'none';
+Content-Security-Policy: default-src 'self' *.sepolia.org *.polygon.technology dns.google cloudflare-dns.com; frame-ancestors 'self' 'none'; connect-src 'self' *;
