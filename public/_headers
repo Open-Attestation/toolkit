@@ -1,3 +1,12 @@
 /*
   X-Frame-Options: DENY
-  Content-Security-Policy: default-src 'self'; frame-ancestors 'none'; connect-src *;
+  Content-Security-Policy: default-src 'self'; frame-ancestors 'none';
+/verify
+  X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'self'; connect-src *.polygon.technology *.sepolia.org; frame-ancestors 'none';
+/dns
+  X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'self'; connect-src dns.google; frame-ancestors 'none';
+/encrypt-decrypt
+  X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'self'; connect-src *; frame-ancestors 'none';
