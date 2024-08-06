@@ -1,3 +1,8 @@
 /*
   X-Frame-Options: DENY
-  Content-Security-Policy: default-src 'self'; connect-src *; frame-ancestors 'none';
+  # Multi-value headers: https://docs.netlify.com/routing/headers/#multi-value-headers
+  Content-Security-Policy: '''
+  default-src 'self';
+  script-src: https://*.googletagmanager.com;
+  connect-src * https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;
+  frame-ancestors 'none';'''
